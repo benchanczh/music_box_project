@@ -30,3 +30,17 @@ done
 for file in *.uids; do
 	mv $file log/$file
 done
+
+# Append file_name to each row (will be used for date)
+cd log/
+
+for f in *_play.log; do
+ 	echo "Processing $f"
+ 	awk -v var="$f" '{print $0,"\t",var}' $f > ${f}.fn
+done
+
+# Remove all log files to save space
+rm *.log
+
+# cat all log with filename to one file
+cat *_play.log.fn > all_play.log.fn
